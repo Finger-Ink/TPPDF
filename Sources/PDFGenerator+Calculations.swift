@@ -27,7 +27,7 @@ extension PDFGenerator {
     }
     
     func calculateCellFrame(_ origin: CGPoint, width: CGFloat, text: NSAttributedString, alignment: TableCellAlignment) -> CGRect {
-        let textMaxHeight = pageBounds.height - maxHeaderHeight() - headerSpace - maxFooterHeight() - footerSpace - contentHeight
+        let textMaxHeight = pageBounds.height - maxHeaderHeight() - headerSpace - maxFooterHeight() - footerSpace - maxFooterHeight() - contentHeight
         // The height is not enough
         if (textMaxHeight <= 0) {
             return CGRect.infinite
@@ -51,7 +51,7 @@ extension PDFGenerator {
     }
     
     func calculateCellFrame(_ origin: CGPoint, width: CGFloat, image: UIImage) -> CGRect {
-        let imageMaxHeight = pageBounds.height - maxHeaderHeight() - headerSpace - maxFooterHeight() - footerSpace - contentHeight
+        let imageMaxHeight = pageBounds.height - maxHeaderHeight() - headerSpace - maxFooterHeight() - footerSpace - maxFooterHeight() - contentHeight
         // The height is not enough
         if (imageMaxHeight <= 0) {
             return CGRect.infinite
