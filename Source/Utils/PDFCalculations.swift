@@ -221,8 +221,28 @@ class PDFCalculations {
                                    position: (origin: CGPoint, width: CGFloat),
                                    text: NSAttributedString,
                                    alignment: PDFTableCellAlignment) -> CGRect {
-        let textMaxHeight = PDFCalculations.calculateAvailableFrameHeight(for: generator, in: container)
-        let frame: CGRect = CGRect(x: position.origin.x, y: position.origin.y, width: position.width, height: textMaxHeight)
+        //let textMaxHeight = PDFCalculations.calculateAvailableFrameHeight(for: generator, in: container)
+        //let frame: CGRect = CGRect(x: position.origin.x, y: position.origin.y, width: position.width, height: textMaxHeight)
+
+		// We're about to calculate the text box frame. Originally (above), we said
+		// "calculate the frame of this text, but make sure it fits inside this box -
+		// with a particular width and height".
+		// We need the width constrained as the horizontal area we allow our text is
+		// finite.
+		// The issue here was the height — the calculateTextFrameAndDrawnSizeInOnePage
+		// method says "if the text you've passed in exceeds the given frame, I'm just going
+		// to assume we're truncating the text, and give you the frame that fits the
+		// truncated text". That would be fantastic (and allow us to split huge volumes
+		// of text across pages), but the problem is that truncation is never communicated
+		// further. The text is truncated, and no one knows.
+		// Therefore, it would render this truncated text, and just go on rendering
+		// the next block it finds.
+		// Keeping this truncation is in the too-hard-basket for now. Instead,
+		// we're just going to assume we have near-infinite height in which to store our
+		// text so the frame is calculated for the _entire_ text.
+		// The calling methods eventually work out that it's going to need to fit
+		// on the next page, and everything just works.
+        let frame: CGRect = CGRect(x: position.origin.x, y: position.origin.y, width: position.width, height: CGFloat.greatestFiniteMagnitude)
 
         let currentRange = CFRange(location: 0, length: 0)
         let (_, _, drawnSize) = calculateTextFrameAndDrawnSizeInOnePage(frame: frame, text: text, currentRange: currentRange)
