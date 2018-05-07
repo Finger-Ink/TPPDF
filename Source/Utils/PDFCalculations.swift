@@ -243,10 +243,12 @@ class PDFCalculations {
 		// The calling methods eventually work out that it's going to need to fit
 		// on the next page, and everything just works.
         let frame: CGRect = CGRect(x: position.origin.x, y: position.origin.y, width: position.width, height: CGFloat.greatestFiniteMagnitude)
+		let drawnSize = calculateSizeForText(in: frame, text: text)
 
-        let currentRange = CFRange(location: 0, length: 0)
-        let (_, _, drawnSize) = calculateTextFrameAndDrawnSizeInOnePage(frame: frame, text: text, currentRange: currentRange)
-        let x: CGFloat = {
+        //let currentRange = CFRange(location: 0, length: 0)
+        //let (_, _, anotherSize) = calculateTextFrameAndDrawnSizeInOnePage(frame: frame, text: text, currentRange: currentRange)
+
+		let x: CGFloat = {
             if alignment.isLeft {
                 return position.origin.x
             } else if alignment.isRight {
@@ -335,6 +337,22 @@ class PDFCalculations {
 
         return calculateTextFrameAndDrawnSizeInOnePage(frame: frame, text: text, currentRange: currentRange)
     }
+
+	static func calculateSizeForText(in frame: CGRect, text: NSAttributedString) -> CGSize {
+		guard text.length > 0 else {
+			return CGSize(width: 0, height: 0)
+		}
+		let ts = NSTextStorage(attributedString: text)
+		let size = CGSize(width: frame.width, height: CGFloat.greatestFiniteMagnitude)
+		let tc = NSTextContainer(size: size)
+		tc.lineFragmentPadding = 0.0
+		let lm = NSLayoutManager()
+		lm.addTextContainer(tc)
+		ts.addLayoutManager(lm)
+		lm.glyphRange(forBoundingRect: CGRect(origin: CGPoint(x: 0, y: 0), size: size), in: tc)
+		let rect = lm.usedRect(for: tc)
+		return CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height + 1)) // adjusted slightly as we're 1 off
+	}
 
     static func calculateTextFrameAndDrawnSizeInOnePage(frame: CGRect, text: CFAttributedString, currentRange: CFRange) -> (CGRect, CTFrame, CGSize) {
         let framesetter = CTFramesetterCreateWithAttributedString(text)
