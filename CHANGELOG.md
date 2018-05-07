@@ -1,26 +1,54 @@
 # Change Log
 
 ## [Unreleased](https://github.com/Techprimate/TPPDF/tree/HEAD)
-[Full Changelog](https://github.com/Techprimate/TPPDF/compare/0.4.0...HEAD)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.0.1...1.0.2)
 
 **Implemented enhancements:**
-
-- Pagination styling using formats or closures.
-- First and last pagination page can be set.
-- Pages can be excluded from pagination.
-- Created class `Table` to manage tables.
-- Added extension `toTableContent` to class `String`, `NSAttributedString` and `UIImage`.
-- Created Error enum `TPPDFError` for error handling.
-- Added image rendering inside table
-- Moved all error handling outside of framework
 
 **Fixed bugs:**
 
 **Closed issues:**
 
-- Issue #5
-- Issue #15
-- Issue #16
+**Merged pull requests:**
+
+## [1.0.2](https://github.com/Techprimate/TPPDF/tree/1.0.2)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.0.1...1.0.2)
+
+**Implemented enhancements:**
+
+**Fixed bugs:**
+
+- Carthage scheme not available
+
+**Closed issues:**
+
+- #59
+
+**Merged pull requests:**
+
+## [1.0.1](https://github.com/Techprimate/TPPDF/tree/1.0.1)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.0.0...1.0.1)
+
+**Implemented enhancements:**
+
+**Fixed bugs:**
+
+**Closed issues:**
+
+**Merged pull requests:**
+
+- PR #56 [by kf99916]
+
+## [1.0.0](https://github.com/Techprimate/TPPDF/tree/1.0.0)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/0.4.0...HEAD)
+
+**Implemented enhancements:**
+
+- Rebuilt whole library, too much for one changelog
+
+**Fixed bugs:**
+
+**Closed issues:**
 
 **Merged pull requests:**
 
