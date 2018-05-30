@@ -1,13 +1,44 @@
 # Change Log
 
 ## [Unreleased](https://github.com/Techprimate/TPPDF/tree/HEAD)
-[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.0.1...1.0.2)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.1.0...HEAD)
 
 **Implemented enhancements:**
 
 **Fixed bugs:**
 
 **Closed issues:**
+
+**Merged pull requests:**
+
+## [1.1.0](https://github.com/Techprimate/TPPDF/tree/HEAD)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.0.3...1.1.0)
+
+**Implemented enhancements:**
+
+- Multi Column Sections (#9)
+
+**Fixed bugs:**
+
+**Closed issues:**
+
+**Merged pull requests:**
+
+- PR #63
+
+## [1.0.3](https://github.com/Techprimate/TPPDF/tree/HEAD)
+[Full Changelog](https://github.com/Techprimate/TPPDF/compare/1.0.2...1.0.3)
+
+**Implemented enhancements:**
+
+Added `PDFGenerator.generate(document:, to:)`
+
+**Fixed bugs:**
+
+**Closed issues:**
+
+Fixed #55
+Fixed #64
 
 **Merged pull requests:**
 

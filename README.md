@@ -44,11 +44,17 @@
     <a href="#features">Features</a>
   • <a href="#communication">Communication</a>
   • <a href="#usage">Example</a>
-  • <a href="#usage">Installation</a>
   • <a href="#usage">Usage</a>
+  • <a href="#installation">Installation</a>
   • <a href="#credits">Credits</a>
   • <a href="#license">License</a>
 </p>
+
+## What's new in 1.1.0?
+
+- Multi-Column Sections
+
+You can now have multiple columns next to each other and add all objects to them!
 
 ## Features
 
@@ -70,6 +76,7 @@
 - Generate PDF files directly to handle large PDF files ([Details](http://stackoverflow.com/questions/14691264/how-can-i-lower-memory-climb-when-generating-large-pdfs))
 - PDF metadata
 - Custom table styling
+- Multi-column sections
 - You need more features? Checkout #Contribute
 
 ## Communication
@@ -466,6 +473,20 @@ Also each cell can have a `margin` which is the distance between the cell frame 
 document.addTable(table: table)
 ```
 
+#### Multi-Column Sections
+
+A multi-column section is a nested container. You create the section with an amount of columns and their relative width, add objects to each column and then add the whole section to the document. 
+
+When adding an object to the section column, you use the Array subscript `section.columns[0]`. You are able to give it an alignment as the first parameter, similar to the `PDFContainer` but only with `.left`, `.center` and `.right` as it is not possible to add a section to the header or footer containers.
+
+```swift
+let section = PDFSection(columnWidths: [0.3, 0.4, 0.3])
+section.columns[0].addText(.right, text: "right")
+section.columns[1].addText(.left, text: "left")
+section.columns[2].addText(.center, text: "center")
+document.addSection(section)
+```
+
 ### Helpers
 
 The following methods of `PDFDocument` are not considered as elements, as they are only runtime changes to the calculations and rendering.
@@ -626,6 +647,44 @@ You are able to set a `title`, `author`, `subject` and `keywords`.
 
 If you need to encrypt the document, set an `owner password` and a `user password`. Also you can restrict printing and copying by setting the `allows printing` and `allows copying` flags.
 
+### Generation
+
+You can generate the PDF file using the following method:
+
+```swift
+let document: PDFDocument
+let filename = "awesome.pdf"
+
+let url = try PDFGenerator.generateURL(document: document, filename: String, progress: { progress in
+    print(progress)
+}, debug: false)
+```
+
+This will render the document to a temporary file and return the URL. Be sure to wrap it a `try-catch` block, as it might throw an error!
+
+It is also possible to render the file and return the data, using `generateData`:
+
+```swift
+let document: PDFDocument
+let filename = "awesome.pdf"
+
+let data = try PDFGenerator.generateData(document: document, progress: { progress in
+    print(progress)
+}, debug: false)
+```
+
+And if you want to directly save it to a specific file, pass an URL to `generate(document:, to: )`:
+
+```swift
+let document: PDFDocument
+let url = URL(string: "file://~/Desktop/awesome.pdf")!
+
+try PDFGenerator.generate(document: document, to: url, progress: { progress in
+    print(progress)
+}, debug: false)
+```
+
+
 ## Installation
 
 ### Requirements
@@ -737,6 +796,10 @@ If you are using TPPDF in your app and want to be listed here, simply create a p
 
 <img src="https://raw.githubusercontent.com/techprimate/tppdf/master/resources/apps/Bug_Journal.png" alt="Bug Journal"/>
 
+[Energy Tracker](https://itunes.apple.com/de/app/energy-tracker/id1193010972) - by Stefan Nebel
+
+<img src="https://raw.githubusercontent.com/techprimate/tppdf/master/resources/apps/EnergyTracker.jpg" alt="Energy Tracker"/>
+
 [Mama's Cookbook (future release)](https://itunes.apple.com/us/app/mamas-cookbook/id1019090528) - by Philip Niedertscheider
 
 <img src="https://raw.githubusercontent.com/techprimate/tppdf/master/resources/apps/MCB.png" alt=MCB"/>
@@ -761,7 +824,8 @@ TPPDF is created by Philip Niedertscheider, owned by [techprimate](https://www.g
 ### Contributors
 
 - Philip Niedertscheider, [techprimate-phil](https://www.github.com/techprimate-phil)
-- Zheng-Xiang Ke, [kf99916](https://www.github.com/kf99916)
+- Zheng-Xiang Ke, [kf99916](https://www.github.csom/kf99916)
+- Marco Betschart, [marbetschar](https://github.com/marbetschar)
 
 ### Thank You
 
