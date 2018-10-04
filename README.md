@@ -241,7 +241,10 @@ If you set a `size` it will try to fit in this size, defaults to `CGSize.zero` w
 - `PDFImageSizeFit.height`
 - `PDFImageSizeFit.widthHeight`
 
-To minimize the file size, images can be compressed using JPEG compression, which can be modified by setting the `quality` value between `0.0` for bad quality and `1.0` for best quality. Default value is `0.85` which gives good compression and good quality.
+To optimize file size, images are resized and compressed using JPEG compression. By default both is enabled, but can change them by setting `options`.
+
+If resizing is enabled, the image will be resized to its frame size in the document.
+If compression is enabled, the image will be compressed using the value set in `quality` value. This value is between `0.0` for bad quality and `1.0` for best quality - default is set to `0.85`, which resolves in a good balance between compression and quality.
 
 #### Images in one row
 
@@ -329,7 +332,7 @@ Each cell has an optional `content` of type `PDFTableContent`, an optional `styl
 
 ##### Alignment
 
-The aligmnet is one of the following `PDFTableCellAlignment`:
+The alignment is one of the following `PDFTableCellAlignment`:
 
 - `topLeft`, `top`, `topRight`
 - `left`, `center`, `right`
@@ -401,6 +404,7 @@ All other cells are styled using the `style.contentStyle` and if the optional va
 
 If there are conflicts, e.g a cell is a column and a header row, then the following priority order, with the higher ones beating the lower ones, is used:
 
+- `style.outline` can receive a `PDFLineStyle` to draw table borders. PDFLineStyle can take radius `CGFloat?` propriety to define radius border. This proprity is only used when drawing a rect, like table. 
 - `cell.style`, a custom style set for this particular cell
 - `style.columnHeaderStyle`, if the cell is a column header therefore in the top rows
 - `style.footerStyle`, if the cell is a footer row

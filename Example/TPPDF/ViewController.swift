@@ -12,10 +12,36 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        generatePDF()
+//        generateTestPDF()
+        generateExamplePDF()
+    }
+
+    func generateTestPDF() {
+        let document = PDFDocument(format: .a4)
+
+//        let section = PDFSection(columnWidths: [0.3, 0.7])
+//        section.columns[0].addText(.left, text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem")
+//        section.columns[1].addText(.left, text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")
+//
+//        document.addSection(section)
+//
+//        document.addSection(section)
+
+        do {
+            // Generate PDF file and save it in a temporary file. This returns the file URL to the temporary file
+            let url = try PDFGenerator.generateURL(document: document, filename: "Example.pdf", progress: {
+                (progressValue: CGFloat) in
+                print("progress: ", progressValue)
+            }, debug: true)
+
+            // Load PDF into a webview from the temporary file
+            (self.view as? UIWebView)?.loadRequest(URLRequest(url: url))
+        } catch {
+            print("Error while generating PDF: " + error.localizedDescription)
+        }
     }
     
-    func generatePDF() {
+    func generateExamplePDF() {
         /* ---- Execution Metrics ---- */
         var startTime = Date()
         /* ---- Execution Metrics ---- */
@@ -40,8 +66,8 @@ class ViewController: UIViewController {
         ])
 
         // Add an image and scale it down. Image will not be drawn scaled, instead it will be scaled down and compressed to save file size.
-        // Also you can define a quality in percent between 0.0 and 1.0 which is the JPEG compression quality.
-        let logoImage = PDFImage(image: UIImage(named: "Icon.png")!, size: CGSize(width: 150, height: 150), quality: 0.9)
+        // Also you can define a quality in percent between 0.0 and 1.0 which is the JPEG compression quality. This is applied if the option `compress` is set.
+        let logoImage = PDFImage(image: UIImage(named: "Icon.png")!, size: CGSize(width: 150, height: 150), quality: 0.9, options: [.resize, .compress])
         document.addImage(.contentCenter, image: logoImage)
 
         // Create and add an title as an attributed string for more customization possibilities
@@ -136,7 +162,7 @@ class ViewController: UIViewController {
 
         // Create attributes for captions
 
-        let captionAttributes: [NSAttributedStringKey: AnyObject] = [
+        let captionAttributes: [NSAttributedString.Key: AnyObject] = [
             .font: UIFont.italicSystemFont(ofSize: 15.0),
             .paragraphStyle: { () -> NSMutableParagraphStyle in
                 let style = NSMutableParagraphStyle()
