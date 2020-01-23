@@ -5,6 +5,11 @@
 //  Created by Philip Niedertscheider on 09/11/2017.
 //
 
+import Foundation
+
+/**
+ TODO: Documentation
+ */
 extension PDFTableCellPosition: Hashable {
 
     /**
@@ -13,12 +18,15 @@ extension PDFTableCellPosition: Hashable {
      Hash values are not guaranteed to be equal across different executions of
      your program. Do not save hash values to use during a future execution.
      */
-    public var hashValue: Int {
-        return row * row * 10 + column
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(row)
+        hasher.combine(column)
     }
-
 }
 
+/**
+ TODO: Documentation
+ */
 extension PDFTableCellPosition: Equatable {
 
     /**
@@ -32,15 +40,12 @@ extension PDFTableCellPosition: Equatable {
      - rhs: Another value to compare.
      */
     public static func == (lhs: PDFTableCellPosition, rhs: PDFTableCellPosition) -> Bool {
-        if lhs.row != rhs.row {
+        guard lhs.row == rhs.row else {
             return false
         }
-
-        if lhs.column != rhs.column {
+        guard lhs.column == rhs.column else {
             return false
         }
-
         return true
     }
-
 }

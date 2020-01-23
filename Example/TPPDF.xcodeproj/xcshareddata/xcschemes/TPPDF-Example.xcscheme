@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BlueprintIdentifier = "D49CB2DC21C7EAD200CDCE70"
                BuildableName = "TPPDF_Tests.xctest"
                BlueprintName = "TPPDF_Tests"
                ReferencedContainer = "container:TPPDF.xcodeproj">
@@ -47,7 +47,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BlueprintIdentifier = "D49CB2DC21C7EAD200CDCE70"
                BuildableName = "TPPDF_Tests.xctest"
                BlueprintName = "TPPDF_Tests"
                ReferencedContainer = "container:TPPDF.xcodeproj">

@@ -1,7 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/techprimate/TPPDF/tree/HEAD) (2018-??-??)
-[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.2.0...HEAD)
+## [Unreleased](https://github.com/techprimate/TPPDF/tree/HEAD) (2019-??-??)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.1...HEAD)
 
 **Implemented enhancements:**
 
@@ -10,6 +10,137 @@
 **Closed issues:**
 
 **Merged pull requests:**
+
+## [1.5.1](https://github.com/techprimate/TPPDF/tree/1.5.1) (2019-06-06)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.0...1.5.1)
+
+**Implemented enhancements:**
+
+- Added merge/combining of multiple documents (Issue #67)
+
+**Closed issues:**
+
+- #67
+
+## [1.5.0](https://github.com/techprimate/TPPDF/tree/1.5.0) (2019-06-05)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.4.1...1.5.0)
+
+**Implemented enhancements:**
+
+- Changed framework methods to be "more Swift(y)"
+- Added groups
+- Added dynamic shapes for group background
+- Added column with automatic wrapping (Issue #113)
+- Added document wide text styles (Issue #57)
+- Added automatic table of content based on text styles (Issue #58)
+
+**Fixed bugs:**
+
+- Fixed line separator in header and footer (Issue #88)
+- Fixed image in footer layout calcuations (Issue #132)
+
+**Closed issues:**
+
+- #9
+- #57
+- #58
+- #88
+- #113
+- #118
+- #127
+- #132
+- #136
+- #137
+- #138
+
+**Merged pull requests:**
+
+## [1.4.1](https://github.com/techprimate/TPPDF/tree/1.4.1) (2019-05-19)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.4.0...1.4.1)
+
+**Fixed bugs:**
+
+- Carthage missing shared scheme (#135)
+
+**Closed issues:**
+
+- #135
+
+## [1.4.0](https://github.com/techprimate/TPPDF/tree/1.4.0) (2019-04-17)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.3.3...1.4.0)
+
+**Implemented enhancements:**
+
+- Added rounded corner clipping to images (#123)
+- Added Swift 5 support
+
+**Fixed bugs:**
+
+- Line separator skewed (#128)
+
+**Closed issues:**
+
+- #123
+- #125
+- #128
+
+## [1.3.3](https://github.com/techprimate/TPPDF/tree/1.3.3) (2019-03-13)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.3.2...1.3.3)
+
+**Implemented enhancements:**
+
+- Changed accessibility of `PDFGenerator`
+
+**Closed issues:**
+
+- #101
+- #103
+- #108
+- #109
+- #111
+- #113
+- #114
+
+
+**Merged pull requests:**
+
+- PR #106 [by protspace]
+- PR #119 [by yhelfronda]
+
+## [1.3.2](https://github.com/techprimate/TPPDF/tree/1.3.2) (2019-01-22)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.3.1...1.3.2)
+
+**Implemented enhancements:**
+
+- Changed accessor methods of `PDFPageFormat` to be publicly accessible.
+- Added public accessor method to `PDFPageLayout`
+
+**Closed issues:**
+
+- Issue #11
+- Issue #111
+
+**Merged pull requests:**
+
+- PR #106 [by protspace]
+
+## [1.3.1](https://github.com/techprimate/TPPDF/tree/1.3.1) (2018-11-13)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.3.0...1.3.1)
+
+**Fixed bugs:**
+
+- Issue #98
+
+## [1.3.0](https://github.com/techprimate/TPPDF/tree/HEAD) (2018-10-03)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.2.1...1.3.0)
+
+**Implemented enhancements:**
+
+- Support for Swift 4.2
+
+**Merged pull requests:**
+
+- PR #94 [by techprimate-phil]
 
 ## [1.2.0](https://github.com/techprimate/TPPDF/tree/1.2.0) (2018-07-12)
 [Full Changelog](https://github.com/techprimate/TPPDF/compare/1.1.2...1.2.0)

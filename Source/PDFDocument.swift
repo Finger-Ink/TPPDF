@@ -11,7 +11,7 @@
 
  It is possible to create a JSON representation using the `PDFJSONSerializable` protocol.
  */
-public class PDFDocument: PDFJSONSerializable {
+public class PDFDocument: CustomStringConvertible, PDFJSONSerializable {
 
     // MARK: - PUBLIC VARS
 
@@ -30,12 +30,22 @@ public class PDFDocument: PDFJSONSerializable {
      */
     public var pagination = PDFPagination()
 
+    /**
+     Holds strong references to all text styles
+     */
+    public var styles: [PDFTextStyle] = []
+
     // MARK: - INTERNAL VARS
 
     /**
      All objects inside the document and the container they are located in
      */
-    var objects: [(PDFContainer, PDFObject)] = []
+    internal var objects: [(PDFContainer, PDFObject)] = []
+
+    /**
+     TODO: Documentation
+     */
+    internal var masterGroup: PDFGroupObject?
 
     // MARK: - PUBLIC INITIALIZERS
 

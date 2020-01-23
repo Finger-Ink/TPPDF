@@ -5,47 +5,67 @@
 //  Created by Philip Niedertscheider on 11/08/16.
 //
 
+import UIKit
+
 /**
  Factory which converts a document into a PDF file
  */
-public class PDFGenerator {
+public class PDFGenerator: CustomStringConvertible {
 
     // MARK: - INTERNAL VARS
 
     /**
      Document which will be converted
      */
-    var document: PDFDocument
+    internal var document: PDFDocument
 
     /**
      List of header and footer objects extracted from the document
      */
-    var headerFooterObjects: [(PDFContainer, PDFObject)] = []
+    internal var headerFooterObjects: [(PDFContainer, PDFObject)] = []
 
     /**
      Layout which holds current state
      */
-    var layout = PDFLayout()
+    internal var layout = PDFLayout()
 
     /**
      Current page which increments during preparation
      */
-    var currentPage: Int = 1
+    internal var currentPage: Int = 1
 
     /**
      Total page count used for displaying in rendered PDF
      */
-    var totalPages: Int = 1
+    public var totalPages: Int = 1
 
-    var progressValue: CGFloat = 0
+    /**
+     Layout information used for columns layout
+     */
+    internal var columnState = PDFColumnLayoutState()
+
+    /**
+     TODO: Documentation
+     */
+    internal var masterGroup: PDFGroupObject?
+
+    /**
+     TODO: Documentation
+     */
+    internal var currentPadding = UIEdgeInsets.zero
+
+    /**
+     Relative value tracking progress
+     */
+    internal var progressValue: CGFloat = 0
 
     /**
      Font of each container.
      These values are used for simple text objects
      */
-    lazy var fonts: [PDFContainer: UIFont] = {
+    internal lazy var fonts: [PDFContainer: UIFont] = {
         var defaults = [PDFContainer: UIFont]()
-        for container in PDFContainer.all + [PDFContainer.none] {
+        for container in PDFContainer.allCases {
             defaults[container] = UIFont.systemFont(ofSize: UIFont.systemFontSize)
         }
         return defaults
@@ -54,29 +74,31 @@ public class PDFGenerator {
     /**
      Enables debugging on all generator instance
      */
-    var debug: Bool = false
+    internal var debug: Bool = false
 
     /**
      Text color of each container.
      These values are used for simple text objects
      */
-    lazy var textColor: [PDFContainer: UIColor] = {
+    internal lazy var textColor: [PDFContainer: UIColor] = {
         var defaults = [PDFContainer: UIColor]()
-        for container in PDFContainer.all + [PDFContainer.none] {
+        for container in PDFContainer.allCases {
             defaults[container] = UIColor.black
         }
         return defaults
     }()
 
-    // MARK: - INTERNAL INITS
+    // MARK: - PUBLIC INITS
 
     /**
      Initializes the generator with a document.
 
      - parameter document: The document which will be converted
      */
-    init(document: PDFDocument) {
+    public init(document: PDFDocument) {
         self.document = document
+
+        layout.margin = document.layout.margin
     }
 
     // MARK: - INTERNAL FUNCS
@@ -84,9 +106,9 @@ public class PDFGenerator {
     /**
      Resets the generator
      */
-    func resetGenerator() {
+    internal func resetGenerator() {
         layout.reset()
+        columnState.reset()
         currentPage = 1
     }
-
 }
