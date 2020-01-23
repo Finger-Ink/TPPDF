@@ -8,19 +8,19 @@
 /**
  Empty space between two elements
  */
-class PDFSpaceObject: PDFObject {
+internal class PDFSpaceObject: PDFObject {
 
     /**
      Height of space object in points
      */
-    var space: CGFloat
+    internal var space: CGFloat
 
     /**
      Initializer
 
      - parameter space: Height of space object
      */
-    init(space: CGFloat) {
+    internal init(space: CGFloat) {
         self.space = space
     }
 
@@ -34,26 +34,11 @@ class PDFSpaceObject: PDFObject {
 
      - returns: Self
      */
-    override func calculate(generator: PDFGenerator, container: PDFContainer) throws -> [(PDFContainer, PDFObject)] {
-        let document = generator.document
-
-        let origin = CGPoint(
-            x: document.layout.margin.left
-                + generator.layout.indentation.leftIn(container: container),
-            y: document.layout.margin.bottom
-                + generator.layout.heights.maxHeaderHeight()
-                + document.layout.space.header
-                + generator.layout.heights.content
-        )
-
-        let width = document.layout.size.width
-            - document.layout.margin.left
-            - generator.layout.indentation.leftIn(container: container)
-            - generator.layout.indentation.rightIn(container: container)
-            - document.layout.margin.right
-
-        self.frame = CGRect(x: origin.x, y: origin.y, width: width, height: space)
-
+    override internal func calculate(generator: PDFGenerator, container: PDFContainer) throws -> [(PDFContainer, PDFObject)] {
+        var size = PDFCalculations.calculateAvailableFrame(for: generator, in: container)
+        size.height = min(space, size.height)
+        let position = PDFCalculations.calculateElementPosition(for: generator, in: container, with: frame.size)
+        self.frame = CGRect(origin: position, size: size)
         generator.layout.heights.add(space, to: container)
 
         return [(container, self)]
@@ -67,14 +52,18 @@ class PDFSpaceObject: PDFObject {
 
      - throws: None
      */
-    override func draw(generator: PDFGenerator, container: PDFContainer) throws {
+    override internal func draw(generator: PDFGenerator, container: PDFContainer) throws {
         if generator.debug {
-            PDFGraphics.drawRect(rect: self.frame, outline: PDFLineStyle(type: .dashed, color: .red, width: 1.0),
+            PDFGraphics.drawRect(rect: self.frame,
+                                 outline: PDFLineStyle(type: .dashed, color: .red, width: 1.0),
                                  pattern: PDFGraphics.FillPattern.dotted(foreColor: .green, backColor: .white))
         }
     }
 
-    override var copy: PDFObject {
+    /**
+     Creates a new `PDFSpaceObject` with the same properties
+     */
+    override internal var copy: PDFObject {
         return PDFSpaceObject(space: self.space)
     }
 }

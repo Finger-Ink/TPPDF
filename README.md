@@ -14,14 +14,14 @@
 	<a href="http://cocoapods.org/pods/TPPDF">
 		<img src="https://img.shields.io/cocoapods/l/TPPDF.svg?style=flat-square" alt="License"/>
 	</a>
-	<a href="http://cocoapods.org/pods/TPPDF">
-		<img src="https://img.shields.io/cocoapods/dt/TPPDF.svg?style=flat-square" alt="Downloads"/>
-	</a>
 </p>
 
 <p align="center">
-	<a href="https://travis-ci.org/Techprimate/TPPDF">
-		<img src="http://img.shields.io/travis/Techprimate/TPPDF.svg?style=flat-square" alt="Travis">
+	<a href="https://travis-ci.org/techprimate/TPPDF">
+		<img src="https://travis-ci.org/techprimate/TPPDF.svg?branch=master&style=flat-square" alt="Travis">
+	</a>
+	<a href="https://app.codacy.com/app/techprimate/TPPDF">
+		<img src="https://api.codacy.com/project/badge/Grade/a30af06f7c6742d9960960a339e908f2" alt="Codacy">
 	</a>
 	<a href="https://codebeat.co/projects/github-com-techprimate-tppdf-master">
 		<img src="https://codebeat.co/badges/ea2a8d79-a50c-43ea-a05a-2ac57baf84de" alt="codebeat">
@@ -29,8 +29,8 @@
 	<a href="https://bettercodehub.com/results/Techprimate/TPPDF">
 		<img src="https://bettercodehub.com/edge/badge/Techprimate/TPPDF" alt="bettercodehub">
 	</a>
-	<a href="https://codecov.io/gh/Techprimate/TPPDF">
-		<img src="https://img.shields.io/codecov/c/github/Techprimate/TPPDF.svg?style=flat-square" alt="codecov">
+	<a href="https://codecov.io/gh/techprimate/TPPDF">
+		<img src="https://img.shields.io/codecov/c/github/techprimate/TPPDF.svg?style=flat-square" alt="codecov">
 	</a>
 </p>
 
@@ -50,11 +50,11 @@
   • <a href="#license">License</a>
 </p>
 
-## What's new in 1.1.0?
-
-- Multi-Column Sections
-
-You can now have multiple columns next to each other and add all objects to them!
+<p align="center" style='color: #28B463'>
+	<b>
+	For high-priority, hands-on support and individual feature requests, feel free to contact us at our business email <a href="mailto:office@techprimate.com">office@techprimate.com</a> for our professional help.
+	</b>
+</p>
 
 ## Features
 
@@ -140,7 +140,7 @@ The following values can be set to format the page:
 
 All values are in dots and are rendered using 72 DPI (dots per inch), as this is the default screen DPI.
 
-You can also used the predefined formats. For details please refer to the source file [PDFPageFormat.swift](https://github.com/Techprimate/TPPDF/blob/master/Source/PDFPageFormat.swift)
+You can also used the predefined formats. For details please refer to the source file [PDFPageFormat.swift](https://github.com/techprimate/TPPDF/blob/master/Source/PDFPageFormat.swift)
 
 If you need your page in landscape format, use the `landscapeSize` variable.
 
@@ -160,7 +160,7 @@ A good example would be the following:
 
 ```swift
 let document = PDFDocument(format: .a4)
-document.addText(.footerCenter, text: "Created using TPPDF for iOS.")
+document.add(.footerCenter, text: "Created using TPPDF for iOS.")
 ```
 
 This command adds the text **Created using TPPDF for iOS** to the footer of all pages, because elements in the header and footer containers are placed on every page.
@@ -192,13 +192,13 @@ To add a simple string `text` with a custom `lineSpacing`, you first need to cre
 let text = "Some text!"
 let spacing: CGFloat = 10.0
 let textElement = PDFSimpleText(text: text, spacing: spacing)
-document.addText(textObject: textElement)
+document.add(textObject: textElement)
 ```
 
 For convenience you are also able to add an attributed string directly, and TPPDF will wrap it in a `PDFSimpleText` for you.
 
 ```swift
-document.addText(text: text, lineSpacing: spacing)
+document.add(text: text, lineSpacing: spacing)
 ```
 
 During the render process it will create an attributed string using the font set by `setFont(font:)` and the text color set by `setTextColor(color:)`. 
@@ -213,13 +213,13 @@ let attributedTitle = NSMutableAttributedString(string: "Awesome attributed titl
 	NSForegroundColorAttributeName : UIColor(red: 219.0 / 255.0, green: 100.0 / 255.0, blue: 58.0 / 255.0, alpha: 1.0)
 ])
 let textElement = PDFAttributedText(text: title)
-document.addAttributedText(textObject: attributedTitle)
+document.add(attributedTextObject: attributedTitle)
 ```
 
 For convenience you are also able to add an attributed string directly, and TPPDF will wrap it in a `PDFAttributedText` for you.
 
 ```swift
-document.addAttributedText(text: attributedTitle)
+document.add(attributedText: attributedTitle)
 ```
 
 #### Image
@@ -229,22 +229,41 @@ To add an image to the document, you first need to create a `PDFImage` which wra
 ```swift
 let image = UIImage(named: "awesome-image")!
 let imageElement = PDFImage(image: image)
-document.addImage(image: imageElement)
+document.add(image: imageElement)
 ```
 
 A `PDFImage` can also include a optional `caption` which is either a `PDFSimpleText` or `PDFAttributedText`. 
 The caption is underneath the image and has the image width as the maximum available width.
+All image settings are customizable per image-object.
 
-If you set a `size` it will try to fit in this size, defaults to `CGSize.zero` which will then use the actual image pixel size. The image can either be scaled to fit the `width` the `height` or both. Adjust this by setting the `sizeFit` to either
+If you set a `size` it will try to fit in this size, defaults to `CGSize.zero` which will then use the actual image pixel size. The image can either be scaled to fit the `width` the `height` or both. Adjust this by setting the `sizeFit` on of:
  
 - `PDFImageSizeFit.width`
 - `PDFImageSizeFit.height`
 - `PDFImageSizeFit.widthHeight`
 
-To optimize file size, images are resized and compressed using JPEG compression. By default both is enabled, but can change them by setting `options`.
+To optimize file size, images are resized and compressed using JPEG compression. By default both is enabled, but can change them by setting `options` on the image instance.
 
 If resizing is enabled, the image will be resized to its frame size in the document.
-If compression is enabled, the image will be compressed using the value set in `quality` value. This value is between `0.0` for bad quality and `1.0` for best quality - default is set to `0.85`, which resolves in a good balance between compression and quality.
+If compression is enabled, the image will be compressed using the value set in the property `quality`. This value ranges from between `0.0` for bad quality and `1.0` for best quality - default is set to `0.85`, which resolves in a good balance between compression and quality.
+
+##### Round Corners
+
+To enable rounded corners, simple add `.roundedTopLeft`, `.roundedTopRight`, `.roundedBottomRight` or `.roundedBottomLeft` for their respective corner to the `options` field or `.rounded` as a shorthand for all corners.
+
+The default value for the `cornerRadius` is set to `nil`, is uses half the image frame size radius. If a custom value is set, it will be in aspect to the final frame.
+
+**Example:**
+
+The  image `Icon.png` has the size `1024px x 1024px` and will be drawn in a frame of `150pt x 150pt`.
+The corner radius is set to `15pt`, therefore the image will first be clipped with a `1024 / 150 * 25 = 170pt` radius and then drawn in the frame, resulting in the given corner radius.
+
+```swift
+PDFImage(image: UIImage(named: "Icon.png")!,
+         size: CGSize(width: 150, height: 150),
+         options: [.rounded],
+         cornerRadius: 25)
+```
 
 #### Images in one row
 
@@ -260,7 +279,7 @@ let images = [
              caption: PDFAttributedText(text: NSAttributedString(string: "Forrest", attributes: captionAttributes))),
 ]
 
-document.addImagesInRow(images: images, spacing: 10)
+document.add(imagesInRow: images, spacing: 10)
 ```
 
 #### List
@@ -317,7 +336,7 @@ list.addItem(PDFListItem(symbol: .numbered(value: nil))
 Now you have created a multi-level list element, you can add to the document:
 
 ```swift
-document.addList(list: list)
+document.add(list: list)
 ```
 
 #### Table
@@ -474,7 +493,7 @@ Also each cell can have a `margin` which is the distance between the cell frame 
 ...and finally you add the table to the document:
 
 ```swift
-document.addTable(table: table)
+document.add(table: table)
 ```
 
 #### Multi-Column Sections
@@ -488,27 +507,98 @@ let section = PDFSection(columnWidths: [0.3, 0.4, 0.3])
 section.columns[0].addText(.right, text: "right")
 section.columns[1].addText(.left, text: "left")
 section.columns[2].addText(.center, text: "center")
-document.addSection(section)
+document.add(sectiion: section)
+```
+
+#### Column Wrap Sections
+
+A column wrap section allows you to split your page into multiple columns and fill it up starting at the left. All you have to do is enable it, add content, and then disable it. When disabling it you can set the flag `addPageBreak` if you want it to continue on a fresh page (defaults to true).
+
+```swift
+document.enable(columns: 4, widths: [0.2, 0.3, 0.4, 0.1], spacings: [10, 50, 20]);
+for i in 0..<200 { // This is an example for the content
+    document.add(text: "\(i)-A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R")
+}
+document.disableColumns(addPageBreak: false);
+```
+
+
+#### Groups
+
+Groups give you the option to dynamically add elements to your document, but calculate them as one.
+This way it is possible to add e.g. multiple `PDFText` elements and if the calculations require a page break, it can be disabled. 
+
+Additionally groups allow to set either an `UIColor` as the `backgroundColor` or even create a complex `PDFDynamicGeometryShape` which adapts to the group frame (see [Dynamic Geometry Shapes](#Dynamic-Geometry-Shapes) for more details). You are also able to add a padding to the group to add additional space around the content.
+
+**Example:**
+
+```swift
+let shape = PDFDynamicGeometryShape(...)
+let group = PDFGroup(allowsBreaks: false,
+                     backgroundColor: .green,
+                     backgroundShape: shape,
+                     padding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 180))
+for i in 0..<10 {
+    group.set(font: UIFont.systemFont(ofSize: 25))
+    group.set(indentation: 30 * CGFloat(i % 5), left: true)
+    group.set(indentation: 30 * CGFloat(i % 3), left: false)
+    group.add(text: "Text \(i)-\(i)-\(i)-\(i)-\(i)")
+}
+document.add(group: group)
+```
+
+#### Dynamic Geometry Shapes
+
+Shapes are very closely related to simple geometric paths, but with the difference, that they adapt to frame changes dynamically.
+
+A `PDFDynamicGeometryShape` holds three properties: 
+
+- `PDFBezierPath` in `path`, defining how the shape looks like
+- `UIColor` in `fillColor` for the content color 
+- and a `PDFLineStyle` in `stroke` for the look of the lines
+
+**Example:**
+
+```swift
+let shape = PDFDynamicGeometryShape(path: path, fillColor: .orange, stroke: .none)
+```
+
+`PDFBezierPath` is heavily related to `UIBezierPath` matching all its functions (e.g. `move(to:)`, `addLine(to:)`). The main difference is that all vertices are of type `PDFBezierPathVertex` and hold a reference to an anchor of the group frame. Using the reference frame of the path, it will resize the shape to fit the group frame, but the vertices will keep their position relative to their anchor.
+
+The following example draws a diamond shape in a `100pt` square.
+
+```swift
+let size = CGSize(width: 100, height: 100)
+let path = PDFBezierPath(ref: CGRect(origin: .zero, size: size))
+path.move(to: PDFBezierPathVertex(position: CGPoint(x: size.width / 2, y: 0), 
+                                  anchor: .topCenter))
+path.addLine(to: PDFBezierPathVertex(position: CGPoint(x: size.width, y: size.height / 2),
+                                     anchor: .middleRight))
+path.addLine(to: PDFBezierPathVertex(position: CGPoint(x: size.width / 2, y: size.height),
+                                     anchor: .bottomCenter))
+path.addLine(to: PDFBezierPathVertex(position: CGPoint(x: 0, y: size.height / 2),
+                                     anchor: .middleLeft))
+path.close()
 ```
 
 ### Helpers
 
 The following methods of `PDFDocument` are not considered as elements, as they are only runtime changes to the calculations and rendering.
 
-#### Space - `addSpace(_ container: PDFContainer, space: CGFloat)`
+#### Space - `add(_ container: PDFContainer, space: CGFloat)`
 
 Adds a space with the height of `space` between the previous element and the next element.
 
 ```swift
-document.setSpace(space: 32.0)
+document.set(space: 32.0)
 ```
 
-#### Simple Text Font - `setFont(_ container: PDFContainer, font: UIFont)`
+#### Simple Text Font - `set(_ container: PDFContainer, font: UIFont)`
 
 Sets the font of a container. This font will be used in all following elements of type `PDFSimpleText` in the given container, until the font is changed. This font does not affect `PDFAttributedText` elements.
 
 ```swift
-document.setFont(font: UIFont.systemFont(ofSize: 20.0))
+document.set(font: UIFont.systemFont(ofSize: 20.0))
 ```
 
 #### Reset Simple Text Font - `resetFont(_ container: PDFContainer)`
@@ -519,39 +609,39 @@ This resets the font to the default font, which is `UIFont.systemFont(ofSize: UI
 document.resetFont(.contentLeft)
 ```
 
-#### Simple Text Color - `setTextColor(_ container: PDFContainer, color: UIColor)`
+#### Simple Text Color - `set(_ container: PDFContainer, textColor: UIColor)`
 
-Sets the font of a container. This font will be used in the next commands in the given container, if there is not a different font specified.
+Sets the text color of a container. This text color will be used in the next commands in the given container, if there is not a different color specified.
 
 ```swift
-document.setFont(UIFont.systemFont(ofSize: 20.0))
+document.set(textColor: UIColor.green)
 ```
 
 #### Reset Simple Text Color - `resetTextColor(_ container: PDFContainer)`
 
-This resets the font to the default font, which is `UIFont.systemFont(ofSize: UIFont.systemFontSize)`
+This resets the text color to the default text color, which is `UIColor.black`
 
 ```swift
-document.resetFont(.contentLeft)
+document.resetTextColor(.contentLeft)
 ```
 
-#### `setIndentation(_ container: PDFContainer, indent: CGFloat, left: Bool)` 
+#### `set(_ container: PDFContainer, indent: CGFloat, left: Bool)` 
 
 Set the indentation to a given `indent` in the container. By setting `left` to `false` you will change the indentation from the right edge.
 
 ```swift
-document.setIndentation(indent: 50.0, left: true)
-document.setIndentation(indent: 50.0, left: false)
+document.set(indent: 50.0, left: true)
+document.set(indent: 50.0, left: false)
 ```
 
 Now the document has an indentation of `50` points from left and right edge.
 If you need to reset the indentation, call the function with `0.0` as parameter
 
 ```swift
-document.setIndentation(indent: 0.0)
+document.set(indent: 0.0)
 ```
 
-#### `setAbsoluteOffset(_ container: PDFContainer, offset: CGFloat)`
+#### `set(_ container: PDFContainer, absoluteOffset: CGFloat)`
 
 Sets the offset in points from the top edge of a `container` to the given parameter `offset`.
 
@@ -688,18 +778,44 @@ try PDFGenerator.generate(document: document, to: url, progress: { progress in
 }, debug: false)
 ```
 
+#### Multiple Documents
+
+If you want to combine multiple `PDFDocument` into a single PDF file, use the alternative methods to the ones in the previous section, taking multiple `documents` as a parameter. 
+
+The progress will now return three values: 
+
+ - the current document index
+ - the progress of the current document 
+ - sum of total progress
+
+**Example:**
+
+```swift
+let url = try PDFGenerator.generateURL(documents: [
+	document1, document2
+], filename: "Example.pdf", progress: { (docIndex: Int, progressValue: CGFloat, totalProgressValue: CGFloat) in
+    print("doc:", docIndex, "progress:", progressValue, "total:", totalProgressValue)
+})
+```
+
+#### Debug
+
+If you want to enable a debug overlay, set the flag `debug` in `PDFGenerator.generate(..)`, `PDFGenerator.generateURL(..)` or `PDFGenerator.generateData(..)` to `true` and it will add colored outlines of the elements in you document.
 
 ## Installation
 
 ### Requirements
 
-| Language  | Branch | Pod version | Xcode version | iOS version |
-| --------- | ------ | ----------- | ------------- | ----------- |
-| Swift 4.1 | [master](https://github.com/techprimate/TPPDF/tree/master) | >= 1.0.x | Xcode 9.3 or greater| iOS 8.3+ |
-| Swift 3.0 | [master](https://github.com/techprimate/TPPDF/tree/master) | >= 0.2.x | Xcode 8 or greater| iOS 8.0+ |
-| Swift 2.3 | [swift-2.3](https://github.com/techprimate/TPPDF/tree/swift-2.3) | 0.1.5 | Xcode 8, Xcode 7.3.x | iOS 8.0+ |
-| Swift 2.2 | [swift-2.2](https://github.com/techprimate/TPPDF/tree/swift-2.3) | 0.1.4 | Xcode 7.3.x | iOS 8.0+ |
+| Language  | Branch                                                           | Pod version | Xcode version         | iOS version |
+| --------- | ---------------------------------------------------------------- | ----------- | --------------------- | ----------- |
+| Swift 5   | [master](https://github.com/techprimate/TPPDF/tree/master)       | >= 1.4.x    | Xcode 10.2+           | iOS 8.3+    |
+| Swift 4.2 | [swift-4.2](https://github.com/techprimate/TPPDF/tree/swift-4.2) | >= 1.3.x    | Xcode 10.0+           | iOS 8.3+    |
+| Swift 4.1 | [swift-4.1](https://github.com/techprimate/TPPDF/tree/swift-4.1) | >= 1.0.x    | Xcode 9.3             | iOS 8.3+    |
+| Swift 3.0 | [swift-3.0](https://github.com/techprimate/TPPDF/tree/swift-3.0) | >= 0.2.x    | Xcode 8               | iOS 8.0+    |
+| Swift 2.3 | [swift-2.3](https://github.com/techprimate/TPPDF/tree/swift-2.3) | 0.1.5       | Xcode 8, Xcode 7.3.x  | iOS 8.0+    |
+| Swift 2.2 | [swift-2.2](https://github.com/techprimate/TPPDF/tree/swift-2.3) | 0.1.4       | Xcode 7.3.x           | iOS 8.0+    |
 
+Bleed development version can be found on the `develop` branch.
 
 ### CocoaPods
 
@@ -741,56 +857,27 @@ $ brew install carthage
 To integrate TPPDF into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "Techprimate/TPPDF" ~> 1.0
+github "techprimate/TPPDF" ~> 1.4
 ```
 
-Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project
+Run `carthage update` to build the framework and drag the built `TPPDF.framework` into your Xcode project
 
 ### Swift Package Manager
 
 Swift Package Manager is not supported, as TPPDF requires the framework `UIKit` which is not available on macOS or Linux.
 
-### Manually
+### Manual Installation
 
-If you prefer not to use either of the aforementioned dependency managers, you can integrate TPPDF into your project manually.
-
-#### Embedded Framework
-
-- Open up Terminal, `cd` into your top-level project directory, and run the following command "if" your project is not initialized as a git repository:
-
-```bash
-$ git init
-```
-
-- Add TPPDF as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following command:
-
-```bash
-$ git submodule add https://github.com/Techprimate/TPPDF.git
-```
-
-- Open the new `TPPDF` folder, and drag the `TPPDF.xcodeproj` into the Project Navigator of your application's Xcode project.
-
-    > It should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
-
-- Select the `TPPDF.xcodeproj` in the Project Navigator and verify the deployment target matches that of your application target.
-- Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
-- In the tab bar at the top of that window, open the "General" panel.
-- Click on the `+` button under the "Embedded Binaries" section.
-- You will see two different `TPPDF.xcodeproj` folders each with two different versions of the `TPPDF.framework` nested inside a `Products` folder.
-
-    > It does not matter which `Products` folder you choose from, but it does matter whether you choose the top or bottom `TPPDF.framework`. 
-    
-- Select the top `TPPDF.framework` for iOS and the bottom one for OS X.
-
-    > You can verify which one you selected by inspecting the build log for your project. The build target for `TPPDF` will be listed as either `TPPDF iOS` or `TPPDF OSX`.
-
-- And that's it!
-
-> The `TPPDF.framework` is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
+As Xcode project configurations are getting pretty complex, it is recommended to use a dependency manager.
+If you still want to add TPPDF manually, please see issue [#97](https://github.com/techprimate/TPPDF/issues/97).
 
 ## Apps using TPPDF
 
 If you are using TPPDF in your app and want to be listed here, simply create a pull request or let me know on twitter or via github. I am always curious who is using my projects :)
+
+[ChatHistory](https://itunes.apple.com/app/id1464880768) - by techprimate
+
+<img src="https://raw.githubusercontent.com/techprimate/TPPDF/master/resources/apps/ChatHistory.png" alt="ChatHistory"/>
 
 [Hikingbook](https://itunes.apple.com/app/id1067838748) - by Zheng-Xiang Ke
 
@@ -804,36 +891,39 @@ If you are using TPPDF in your app and want to be listed here, simply create a p
 
 <img src="https://raw.githubusercontent.com/techprimate/tppdf/master/resources/apps/EnergyTracker.jpg" alt="Energy Tracker"/>
 
-[Mama's Cookbook (future release)](https://itunes.apple.com/us/app/mamas-cookbook/id1019090528) - by Philip Niedertscheider
-
-<img src="https://raw.githubusercontent.com/techprimate/tppdf/master/resources/apps/MCB.png" alt=MCB"/>
-
 ## Credits
 
-TPPDF is created by Philip Niedertscheider, owned by [techprimate](https://www.github.com/techprimate)
+TPPDF is created and maintained by Philip Niedertscheider, founder of [techprimate](https://www.github.com/techprimate).
 
 <p align="center">
 	<a href="https://www.techprimate.com">
-		<img src="https://img.shields.io/badge/www-techprimate.com-blue.svg?style=flat-square" alt="techprimate.com">
+		<img src="https://img.shields.io/badge/www-techprimate.com-lightgrey.svg?style=flat-square" alt="techprimate.com">
 	</a>
 	<a href="http://twitter.com/techprimate">
-	    <img src="https://img.shields.io/badge/twitter-@Techprimate-blue.svg?style=flat-square" alt="twitter">
+	    <img src="https://img.shields.io/badge/twitter-@techprimate-blue.svg?style=flat-square" alt="twitter">
+	</a>
+	<a href="https://instagram.com/techprimate">
+		<img src="https://img.shields.io/badge/instagram-@techprimate-c13584.svg?style=flat-square" alt="facebook">
 	</a>
 	<a href="https://facebook.com/techprimate">
-		<img src="https://img.shields.io/badge/facebook-@Techprimate-blue.svg?style=flat-square" alt="facebook">
+		<img src="https://img.shields.io/badge/facebook-@techprimate-blue.svg?style=flat-square" alt="facebook">
 	</a>
 </p>
 
 
 ### Contributors
 
-- Philip Niedertscheider, [techprimate-phil](https://www.github.com/techprimate-phil)
-- Zheng-Xiang Ke, [kf99916](https://www.github.csom/kf99916)
-- Marco Betschart, [marbetschar](https://github.com/marbetschar)
+Please consider backing this project by using the following link: 
+
+<a href="https://paypal.me/tprm8" target="_blank">
+	<img src="https://raw.githubusercontent.com/techprimate/tppdf/master/resources/back-this-project.png" alt="Back This Project">
+</a>
+
+We want to thank all [contributors](https://github.com/techprimate/TPPDF/graphs/contributors) for their effort!
 
 ### Thank You
 
-Special thanks goes to **Nutchaphon Rewik** for his project [SimplePDF](https://github.com/nRewik/SimplePDF) for the inspiration.
+Special thanks goes to **Nutchaphon Rewik** for his project [SimplePDF](https://github.com/nRewik/SimplePDF) as the inspiration.
 
 ## License
 
