@@ -365,7 +365,7 @@ internal class PDFTableObject: PDFObject {
             }
         }
 
-        let compactObjects = result.flatMap { (obj) -> (PDFContainer, PDFObject)? in
+        let compactObjects = result.compactMap { (obj) -> (PDFContainer, PDFObject)? in
             if let obj = obj {
                 return (container, obj)
             } else {
