@@ -1,7 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/techprimate/TPPDF/tree/HEAD) (2019-??-??)
-[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.1...HEAD)
+## [Unreleased](https://github.com/techprimate/TPPDF/tree/HEAD) (2020-??-??)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/2.2.0...HEAD)
 
 **Implemented enhancements:**
 
@@ -10,6 +10,178 @@
 **Closed issues:**
 
 **Merged pull requests:**
+
+## [Unreleased](https://github.com/techprimate/TPPDF/tree/HEAD) (2020-06-27)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/2.1.2...2.2.0)
+
+**Implemented enhancements:**
+
+- macOS Support!
+
+**Closed issues:**
+
+- Issue #193
+
+**Merged pull requests:**
+
+- PR #217
+
+## [2.1.2](https://github.com/techprimate/TPPDF/tree/2.1.2) (2020-06-23)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/2.1.1...2.1.2)
+
+**Fixed bugs:**
+
+- Height of image captions are now calcuated correctly (Issue #208)
+
+**Closed issues:**
+
+- Issue #208
+
+**Merged pull requests:**
+
+- PR #214 [by chrisgonzgonz]
+
+
+## [2.1.1](https://github.com/techprimate/TPPDF/tree/2.1.1) (2020-06-16)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/2.1.0...2.1.1)
+
+**Implemented enhancements:**
+
+- Added raw representable to `PDFTableCellAlignment`
+- Added support for groups inside section columns
+
+**Fixed bugs:**
+
+- Fixed indentations inside sections
+
+## [2.1.0](https://github.com/techprimate/TPPDF/tree/2.1.0) (2020-06-15)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/2.0.1...2.1.0)
+
+**Implemented enhancements:**
+
+- Added raw representable values to `PDFPageFormat`
+- Added raw representable type to `PDFLineType`
+- Added constant `none` to `PDFTableCellStyle` and `PDFTableCellBorders`
+- Added background color to `PDFSectionColumn` (Issue #122)
+
+**Fixed bugs:**
+
+- Added note to documentation about not reusing `PDFSection` instances (Issue #122)
+- Added missing font and text color reset to generator
+
+**Closed issues:**
+
+- Issue #73
+- Issue #122
+- Issue #204
+- Issue #197
+- Issue #189
+- Issue #186
+- Issue #184
+- Issue #183
+
+**Merged pull requests:**
+
+- Issue #211
+
+## [2.0.1](https://github.com/techprimate/TPPDF/tree/2.0.1) (2020-05-31)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/2.0.0...2.0.1)
+
+**Implemented enhancements:**
+
+- Removed JSON representation
+- Added deprecation for `table.generateCells`
+
+**Fixed bugs:**
+
+- Missing page break after space which overlaps page end (#204)
+
+**Closed issues:**
+
+- Issue #204
+
+## [2.0.0](https://github.com/techprimate/TPPDF/tree/2.0.0) (2020-05-19)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.6.0...2.0.0)
+
+**Implemented enhancements:**
+
+- Table Merging
+- Swift Package Manager Support
+- Hyperlinks in texts
+
+**Fixed bugs:**
+
+- External document including empty pages 
+
+**Closed issues:**
+
+- Issue #41
+- Issue #86
+- Issue #148
+- Issue #178
+- Issue #179
+- Issue #182
+- Issue #183
+- Issue #184
+- Issue #185
+- Issue #186
+- Issue #196
+- Issue #197
+
+**Merged pull requests:**
+
+- Issue #181
+
+## [1.6.0](https://github.com/techprimate/TPPDF/tree/1.6.0) (2020-03-23)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.4...1.6.0)
+
+**Implemented enhancements:**
+
+- Added progress reporting using iOS internal `Foundation.Progress` (Issue #155)
+- Added a better test example experience
+- Added support to embed external PDF document (Issue #31)
+- Added clickable URL support for images (Issue #170)
+- Added support for NSAttributedString link attributes (Issue #71)
+- Added subscript range access to PDFTable and deprecated `PDFTable.setCellStyle`
+
+**Fixed bugs:**
+
+- Fixed TravisCI configuration
+
+**Closed issues:**
+
+- Issue #155
+- Issue #31
+- Issue #170
+- Issue #71
+
+**Merged pull requests:**
+
+- Issue #171
+- Issue #172
+- Issue #174
+- Issue #177
+
+## [1.5.4](https://github.com/techprimate/TPPDF/tree/1.5.4) (2019-06-06)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.3...1.5.4)
+
+**Implemented enhancements:**
+
+- Fixed carthage support once again
+
+## [1.5.3](https://github.com/techprimate/TPPDF/tree/1.5.3) (2019-06-06)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.2...1.5.3)
+
+**Implemented enhancements:**
+
+- Fixed padding in groups 
+
+## [1.5.2](https://github.com/techprimate/TPPDF/tree/1.5.2) (2019-06-06)
+[Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.1...1.5.2)
+
+**Implemented enhancements:**
+
+- Added group breaking
 
 ## [1.5.1](https://github.com/techprimate/TPPDF/tree/1.5.1) (2019-06-06)
 [Full Changelog](https://github.com/techprimate/TPPDF/compare/1.5.0...1.5.1)
@@ -20,7 +192,7 @@
 
 **Closed issues:**
 
-- #67
+- Issue #67
 
 ## [1.5.0](https://github.com/techprimate/TPPDF/tree/1.5.0) (2019-06-05)
 [Full Changelog](https://github.com/techprimate/TPPDF/compare/1.4.1...1.5.0)
@@ -41,19 +213,17 @@
 
 **Closed issues:**
 
-- #9
-- #57
-- #58
-- #88
-- #113
-- #118
-- #127
-- #132
-- #136
-- #137
-- #138
-
-**Merged pull requests:**
+- Issue #9
+- Issue #57
+- Issue #58
+- Issue #88
+- Issue #113
+- Issue #118
+- Issue #127
+- Issue #132
+- Issue #136
+- Issue #137
+- Issue #138
 
 ## [1.4.1](https://github.com/techprimate/TPPDF/tree/1.4.1) (2019-05-19)
 [Full Changelog](https://github.com/techprimate/TPPDF/compare/1.4.0...1.4.1)
@@ -80,9 +250,9 @@
 
 **Closed issues:**
 
-- #123
-- #125
-- #128
+- Issue #123
+- Issue #125
+- Issue #128
 
 ## [1.3.3](https://github.com/techprimate/TPPDF/tree/1.3.3) (2019-03-13)
 [Full Changelog](https://github.com/techprimate/TPPDF/compare/1.3.2...1.3.3)
@@ -93,14 +263,13 @@
 
 **Closed issues:**
 
-- #101
-- #103
-- #108
-- #109
-- #111
-- #113
-- #114
-
+- Issue #101
+- Issue #103
+- Issue #108
+- Issue #109
+- Issue #111
+- Issue #113
+- Issue #114
 
 **Merged pull requests:**
 
