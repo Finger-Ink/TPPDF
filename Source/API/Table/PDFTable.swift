@@ -48,6 +48,11 @@ public class PDFTable: PDFDocumentObject {
     public var showHeadersOnEveryPage: Bool = false
 
     /**
+     Cells should split when overlapping page
+     */
+    public var shouldSplitCellsOnPageBeak = false
+
+    /**
      Count of rows and columns in this table
      */
     public private(set) var size: (rows: Int, columns: Int)
@@ -63,40 +68,6 @@ public class PDFTable: PDFDocumentObject {
         self.size = (rows: rows, columns: columns)
         self.cells = (0..<rows).map({ _ in (0..<columns).map({ _ in PDFTableCell() }) })
         self.widths = (0..<columns).map({ _ in 1.0 / CGFloat(columns) })
-    }
-
-    /**
-     Generates cells from given `data` and `alignments` and stores the result in the instance variable `cells`
-
-     - throws: `PDFError` if table validation fails. See `PDFTableValidator.validateTableData(::)` for details
-     */
-    @available(*, deprecated, message: "Use the content and alignment properties instead, this will be removed in release 2.X")
-    public func generateCells(data: [[Any?]], alignments: [[PDFTableCellAlignment]]) throws {
-        try PDFTableValidator.validateTableData(data: data, alignments: alignments)
-
-        self.size.rows = data.count
-        self.cells = []
-
-        for (rowIndex, row) in data.enumerated() {
-            self.size.columns = row.count
-            var contentRow = [PDFTableCell]()
-            for (colIndex, col) in row.enumerated() {
-                let content = try PDFTableContent(content: col)
-                let alignment = alignments[rowIndex][colIndex]
-
-                let cell = PDFTableCell(content: content, alignment: alignment)
-                contentRow.append(cell)
-            }
-            self.cells.append(contentRow)
-        }
-    }
-
-    /**
-     Modify the cell style of at the position defined by `row` and `column`
-     */
-    @available(*, deprecated, message: "Use subscript accessor [row:column:] instead, this will be removed in release 2.1")
-    public func setCellStyle(row rowIndex: Int, column columnIndex: Int, style cellStyle: PDFTableCellStyle?) throws {
-        self[rowIndex, columnIndex].style = cellStyle
     }
 
     /**
